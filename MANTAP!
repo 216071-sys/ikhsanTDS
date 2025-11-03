@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="id">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pendaftaran Santri Baru</title>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    .forest-bg {
+      background: linear-gradient(135deg, #1a4d2e 0%, #2d5f3f 50%, #3a7d4f 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .forest-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(139, 195, 74, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(46, 125, 50, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    
+    .tree-silhouette {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 30%;
+      background: linear-gradient(to top, rgba(13, 27, 42, 0.3) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    
+    .form-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    
+    .input-field {
+      transition: all 0.3s ease;
+    }
+    
+    .input-field:focus {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+    }
+    
+    .submit-btn {
+      transition: all 0.3s ease;
+    }
+    
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+    }
+    
+    .success-message {
+      animation: slideIn 0.5s ease-out;
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .leaf-icon {
+      display: inline-block;
+      margin-right: 8px;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="forest-bg min-h-full">
+  <div class="tree-silhouette"></div>
+  <div class="relative z-10 min-h-full flex items-center justify-center p-4">
+   <div class="form-container w-full max-w-2xl p-8 my-8">
+    <div class="text-center mb-8">
+     <div class="text-5xl mb-4">
+      🌲
+     </div>
+     <h1 id="judul-formulir" class="text-4xl font-bold mb-2" style="color: #1a4d2e;">Pendaftaran Santri Baru</h1>
+     <p id="subjudul" class="text-xl" style="color: #2d5f3f;">Tahun Ajaran 2024/2025</p>
+     <p id="nama-pesantren" class="text-lg mt-2" style="color: #4a7c59;">Pondok Pesantren Al-Hikmah</p>
+    </div>
+    <div id="success-message" class="hidden success-message mb-6 p-4 rounded-lg" style="background-color: #c8e6c9; color: #1b5e20;">
+     <div class="flex items-center"><span class="text-2xl mr-3">✅</span>
+      <div>
+       <p class="font-bold">Pendaftaran Berhasil!</p>
+       <p class="text-sm">Data santri telah tersimpan. Kami akan menghubungi Anda segera.</p>
+      </div>
+     </div>
+    </div>
+    <form id="registration-form" class="space-y-6">
+     <div><label for="nama-lengkap" class="block text-sm font-semibold mb-2" style="color: #1a4d2e;"> <span class="leaf-icon">🍃</span>Nama Lengkap Santri </label> <input type="text" id="nama-lengkap" required class="input-field w-full px-4 py-3 border-2 rounded-lg focus:outline-none" style="border-color: #4a7c59;" placeholder="Masukkan nama lengkap">
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div><label for="tanggal-lahir" class="block text-sm font-semibold mb-2" style="color: #1a4d2e;"> <span class="leaf-icon">🍃</span>Tanggal Lahir </label> <input type="date" id="tanggal-lahir" required class="input-field w-full px-4 py-3 border-2 rounded-lg focus:outline-none" style="border-color: #4a7c59;">
+      </div>
+      <div><label for="jenis-kelamin" class="block text-sm font-semibold mb-2" style="color: #1a4d2e;"> <span class="leaf-icon">🍃</span>Jenis Kelamin </label> <select id="jenis-kelamin" required class="input-field w-full px-4 py-3 border-2 rounded-lg focus:outline-none" style="border-color: #4a7c59;"> <option value="">Pilih jenis kelamin</option> <option value="Laki-laki">Laki-laki</option> <option value="Perempuan">Perempuan</option> </select>
+      </div>
+     </div>
+     <div><label for="nama-wali" class="block text-sm font-semibold mb-2" style="color: #1a4d2e;"> <span class="leaf-icon">🍃</span>Nama Wali/Orang Tua </label> <input type="text" id="nama-wali" required class="input-field w-full px-4 py-3 border-2 rounded-lg focus:outline-none" style="border-color: #4a7c59;" placeholder="Masukkan nama wali">
+     </div>
+     <div><label for="nomor-telepon" class="block text-sm font-semibold mb-2" style="color: #1a4d2e;"> <span class="leaf-icon">🍃</span>Nomor Telepon/WhatsApp </label> <input type="tel" id="nomor-telepon" required class="input-field w-full px-4 py-3 border-2 rounded-lg focus:outline-none" style="border-color: #4a7c59;" placeholder="08xxxxxxxxxx">
+     </div>
+     <div><label for="alamat" class="block text-sm font-semibold mb-2" style="color: #1a4d2e;"> <span class="leaf-icon">🍃</span>Alamat Lengkap </label> <textarea id="alamat" required rows="3" class="input-field w-full px-4 py-3 border-2 rounded-lg focus:outline-none" style="border-color: #4a7c59;" placeholder="Masukkan alamat lengkap"></textarea>
+     </div>
+     <div><label for="program" class="block text-sm font-semibold mb-2" style="color: #1a4d2e;"> <span class="leaf-icon">🍃</span>Program Pendidikan </label> <select id="program" required class="input-field w-full px-4 py-3 border-2 rounded-lg focus:outline-none" style="border-color: #4a7c59;"> <option value="">Pilih program</option> <option value="Tahfidz">Tahfidz Al-Quran</option> <option value="Kitab Kuning">Kitab Kuning</option> <option value="Reguler">Reguler</option> <option value="Intensif">Intensif</option> </select>
+     </div><button type="submit" id="submit-btn" class="submit-btn w-full py-4 rounded-lg font-bold text-lg text-white" style="background-color: #2e7d32;"> <span id="tombol-daftar-text">🌿 Daftar Sekarang</span> </button>
+    </form>
+    <div class="mt-6 text-center text-sm" style="color: #4a7c59;">
+     <p>📞 Hubungi kami: (021) 1234-5678</p>
+     <p>📧 Email: info@pesantren.com</p>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      judul_formulir: "Pendaftaran Santri Baru",
+      subjudul: "Tahun Ajaran 2024/2025",
+      nama_pesantren: "Pondok Pesantren Al-Hikmah",
+      tombol_daftar: "🌿 Daftar Sekarang",
+      background_color: "#1a4d2e",
+      surface_color: "#ffffff",
+      text_color: "#1a4d2e",
+      primary_action_color: "#2e7d32",
+      secondary_action_color: "#4a7c59"
+    };
+
+    let registrationCount = 0;
+
+    const dataHandler = {
+      onDataChanged(data) {
+        registrationCount = data.length;
+      }
+    };
+
+    async function onConfigChange(config) {
+      const judulElement = document.getElementById('judul-formulir');
+      const subjudulElement = document.getElementById('subjudul');
+      const namaPesantrenElement = document.getElementById('nama-pesantren');
+      const tombolDaftarElement = document.getElementById('tombol-daftar-text');
+      
+      if (judulElement) {
+        judulElement.textContent = config.judul_formulir || defaultConfig.judul_formulir;
+        judulElement.style.color = config.text_color || defaultConfig.text_color;
+      }
+      
+      if (subjudulElement) {
+        subjudulElement.textContent = config.subjudul || defaultConfig.subjudul;
+        subjudulElement.style.color = config.secondary_action_color || defaultConfig.secondary_action_color;
+      }
+      
+      if (namaPesantrenElement) {
+        namaPesantrenElement.textContent = config.nama_pesantren || defaultConfig.nama_pesantren;
+        namaPesantrenElement.style.color = config.secondary_action_color || defaultConfig.secondary_action_color;
+      }
+      
+      if (tombolDaftarElement) {
+        tombolDaftarElement.textContent = config.tombol_daftar || defaultConfig.tombol_daftar;
+      }
+      
+      const forestBg = document.querySelector('.forest-bg');
+      if (forestBg) {
+        forestBg.style.background = `linear-gradient(135deg, ${config.background_color || defaultConfig.background_color} 0%, ${config.secondary_action_color || defaultConfig.secondary_action_color} 50%, ${config.primary_action_color || defaultConfig.primary_action_color} 100%)`;
+      }
+      
+      const formContainer = document.querySelector('.form-container');
+      if (formContainer) {
+        formContainer.style.background = `rgba(255, 255, 255, 0.95)`;
+      }
+      
+      const labels = document.querySelectorAll('label');
+      labels.forEach(label => {
+        label.style.color = config.text_color || defaultConfig.text_color;
+      });
+      
+      const inputs = document.querySelectorAll('.input-field');
+      inputs.forEach(input => {
+        input.style.borderColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+      });
+      
+      const submitBtn = document.getElementById('submit-btn');
+      if (submitBtn) {
+        submitBtn.style.backgroundColor = config.primary_action_color || defaultConfig.primary_action_color;
+      }
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              if (window.elementSdk) {
+                window.elementSdk.config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.surface_color || defaultConfig.surface_color,
+            set: (value) => {
+              if (window.elementSdk) {
+                window.elementSdk.config.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              if (window.elementSdk) {
+                window.elementSdk.config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.primary_action_color || defaultConfig.primary_action_color,
+            set: (value) => {
+              if (window.elementSdk) {
+                window.elementSdk.config.primary_action_color = value;
+                window.elementSdk.setConfig({ primary_action_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+            set: (value) => {
+              if (window.elementSdk) {
+                window.elementSdk.config.secondary_action_color = value;
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              }
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["judul_formulir", config.judul_formulir || defaultConfig.judul_formulir],
+        ["subjudul", config.subjudul || defaultConfig.subjudul],
+        ["nama_pesantren", config.nama_pesantren || defaultConfig.nama_pesantren],
+        ["tombol_daftar", config.tombol_daftar || defaultConfig.tombol_daftar]
+      ]);
+    }
+
+    async function initializeApp() {
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities,
+          mapToEditPanelValues
+        });
+      }
+
+      if (window.dataSdk) {
+        const initResult = await window.dataSdk.init(dataHandler);
+        if (!initResult.isOk) {
+          console.error("Failed to initialize data SDK");
+        }
+      }
+
+      const form = document.getElementById('registration-form');
+      const successMessage = document.getElementById('success-message');
+      const submitBtn = document.getElementById('submit-btn');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        if (registrationCount >= 999) {
+          successMessage.className = 'success-message mb-6 p-4 rounded-lg';
+          successMessage.style.backgroundColor = '#ffcdd2';
+          successMessage.style.color = '#c62828';
+          successMessage.innerHTML = `
+            <div class="flex items-center">
+              <span class="text-2xl mr-3">⚠️</span>
+              <div>
+                <p class="font-bold">Batas Maksimum Tercapai</p>
+                <p class="text-sm">Maaf, kuota pendaftaran sudah penuh (999 santri). Silakan hubungi kami.</p>
+              </div>
+            </div>
+          `;
+          successMessage.classList.remove('hidden');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.6';
+        submitBtn.innerHTML = '<span>⏳ Menyimpan data...</span>';
+
+        const formData = {
+          nama_lengkap: document.getElementById('nama-lengkap').value,
+          tanggal_lahir: document.getElementById('tanggal-lahir').value,
+          jenis_kelamin: document.getElementById('jenis-kelamin').value,
+          nama_wali: document.getElementById('nama-wali').value,
+          nomor_telepon: document.getElementById('nomor-telepon').value,
+          alamat: document.getElementById('alamat').value,
+          program: document.getElementById('program').value,
+          tanggal_daftar: new Date().toISOString()
+        };
+
+        if (window.dataSdk) {
+          const result = await window.dataSdk.create(formData);
+
+          if (result.isOk) {
+            successMessage.className = 'success-message mb-6 p-4 rounded-lg';
+            successMessage.style.backgroundColor = '#c8e6c9';
+            successMessage.style.color = '#1b5e20';
+            successMessage.innerHTML = `
+              <div class="flex items-center">
+                <span class="text-2xl mr-3">✅</span>
+                <div>
+                  <p class="font-bold">Pendaftaran Berhasil!</p>
+                  <p class="text-sm">Data santri telah tersimpan. Kami akan menghubungi Anda segera.</p>
+                </div>
+              </div>
+            `;
+            successMessage.classList.remove('hidden');
+            form.reset();
+
+            setTimeout(() => {
+              successMessage.classList.add('hidden');
+            }, 5000);
+          } else {
+            successMessage.className = 'success-message mb-6 p-4 rounded-lg';
+            successMessage.style.backgroundColor = '#ffcdd2';
+            successMessage.style.color = '#c62828';
+            successMessage.innerHTML = `
+              <div class="flex items-center">
+                <span class="text-2xl mr-3">❌</span>
+                <div>
+                  <p class="font-bold">Terjadi Kesalahan</p>
+                  <p class="text-sm">Maaf, pendaftaran gagal. Silakan coba lagi.</p>
+                </div>
+              </div>
+            `;
+            successMessage.classList.remove('hidden');
+          }
+        }
+
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+        const tombolText = window.elementSdk?.config?.tombol_daftar || defaultConfig.tombol_daftar;
+        submitBtn.innerHTML = `<span id="tombol-daftar-text">${tombolText}</span>`;
+      });
+    }
+
+    initializeApp();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'998b14c7b65344bb',t:'MTc2MjE2NDYyMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
