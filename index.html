@@ -1,12 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-<title>ISENG ISENG</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #181818;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        #timer {
+            font-size: 60px;
+            margin-top: 20px;
+            background: #333;
+            padding: 20px 40px;
+            border-radius: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        input {
+            width: 80px;
+            padding: 10px;
+            font-size: 18px;
+            text-align: center;
+            border-radius: 5px;
+            border: none;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
 
-<h1>LEMBARAN</h1>
-<p>GK tau mau nulis apa</p>
+    <div class="container">
+        <h1>Countdown Timer</h1>
+
+        <p>Masukkan waktu (detik):</p>
+        <input type="number" id="inputTime" placeholder="60">
+        <br>
+        <button onclick="startCountdown()">Mulai</button>
+
+        <div id="timer">00:00</div>
+    </div>
+
+    <script>
+        let timer;
+        let countdownTime;
+
+        function startCountdown() {
+            let input = document.getElementById("inputTime").value;
+
+            if (!input || input <= 0) {
+                alert("Masukkan waktu yang benar!");
+                return;
+            }
+
+            countdownTime = parseInt(input);
+
+            clearInterval(timer); // Reset timer sebelumnya
+
+            timer = setInterval(() => {
+                let minutes = Math.floor(countdownTime / 60);
+                let seconds = countdownTime % 60;
+
+                // Format 2 digit
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                document.getElementById("timer").textContent = `${minutes}:${seconds}`;
+
+                if (countdownTime > 0) {
+                    countdownTime--;
+                } else {
+                    clearInterval(timer);
+                    document.getElementById("timer").textContent = "Waktu Habis!";
+                }
+            }, 1000);
+        }
+    </script>
 
 </body>
 </html>
